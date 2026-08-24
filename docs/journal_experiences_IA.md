@@ -192,3 +192,61 @@ toute considération de performance. Il n'apparaît dans aucun benchmark publié
 | Ce que l'IA a bien fait | Ce qu'elle a mal fait | Ce qui a exigé un humain |
 |---|---|---|
 | *(à remplir)* | *(à remplir)* | Apporter le contexte métier (périmètre temporel des ventes) — EXP-01 |
+
+---
+
+### EXP-06 — Génération du notebook amélioré
+
+| | |
+|---|---|
+| **Date** | 24/08/2026 |
+| **Besoin** | Produire un notebook corrigé, narré en Markdown et graphiquement diversifié, en réponse aux deux axes d'amélioration relevés par l'évaluateur du P6. |
+| **Outil** | Claude Opus 5 |
+| **Prompt** | `PR-06` |
+| **Variantes** | **V1** : éditer directement le fichier `.ipynb`. **V2** : générer le notebook depuis un script `src/build_notebook.py`, puis l'exécuter de bout en bout par `nbconvert`. |
+| **Résultat V1** | Fonctionne, mais le `.ipynb` est du JSON : illisible en diff, impossible à relire sérieusement, et la structure dérive à chaque édition. Surtout, rien n'empêche de réintroduire l'incident d'ordre d'exécution. |
+| **Résultat V2** | La narration vit dans un `.py` versionnable. Le notebook livré est par construction le produit d'une exécution complète et ordonnée. |
+| **Décision** | **V2 RETENU.** |
+| **Vérification** | Exécution complète par `nbconvert` : 58 cellules, 13 figures embarquées, **0 erreur**. Suite de tests exécutée depuis le notebook lui-même (section 9). |
+| **Coût** | 3 h |
+
+**Trois défauts produits par l'IA et corrigés à la relecture visuelle.** Le code générait des
+figures syntaxiquement correctes et sémantiquement fausses ou illisibles :
+
+1. **Courbe de Pareto théorique tracée à l'envers.** L'exposant retenu était 0,161 au lieu de
+   7,21 — l'inverse. La courbe « 20/80 » passait sous la diagonale, décrivant une répartition
+   plus égalitaire que l'égalité parfaite. Aucune erreur d'exécution, un graphique d'apparence
+   soignée, et un contresens complet. Corrigé en posant l'équation : (1 − 0,20)^a = 0,20.
+2. **Sous-titres écrits par-dessus les titres.** Décalage vertical insuffisant, illisible sur
+   les treize figures.
+3. **Légendes recouvrant les barres de données** sur trois figures.
+
+**Enseignement.** Aucun de ces défauts n'est détectable par exécution, par test unitaire ou par
+relecture de code. Il faut **ouvrir l'image et la regarder**. Une IA qui produit du code
+graphique produit du code qui s'exécute, pas nécessairement une figure qui se lit — et le premier
+défaut montre qu'elle peut aussi produire une figure qui ment. L'étape de relecture visuelle est
+non négociable et a été ajoutée à la définition de « terminé » du lot correspondant.
+
+---
+
+### EXP-07 — Découverte non anticipée par la validation de schéma
+
+| | |
+|---|---|
+| **Date** | 24/08/2026 |
+| **Besoin** | Mettre en place un garde-fou contre la récidive des erreurs corrigées. |
+| **Outil** | pandera 0.32.1 (pas d'IA sur cette étape) |
+| **Résultat** | Le schéma, écrit pour intercepter des erreurs **connues**, a rejeté un article que personne ne cherchait : la référence 4355, vendue 12,65 € TTC pour 77,48 € de prix d'achat — taux de marque de −635 %, 97 unités en stock, **7 516 € immobilisés**, zéro vente. |
+| **Décision** | **Mise en quarantaine plutôt que correction automatique.** |
+| **Vérification** | Test dédié verrouillant deux propriétés : l'anomalie connue est isolée, et rien d'autre ne l'est. |
+| **Coût** | 20 min |
+
+**Enseignement méthodologique.** Un dispositif de contrôle écrit contre des erreurs connues
+attrape des erreurs inconnues. C'est l'argument le plus solide en faveur de la validation
+déclarative : sa valeur ne se limite pas aux cas qu'on a anticipés.
+
+Le choix de la quarantaine mérite d'être explicité. Corriger d'office reviendrait à inventer une
+valeur — l'hypothèse de la virgule décalée (126,50 € au lieu de 12,65 €, ce qui donnerait un
+coefficient de 1,36, parfaitement normal) est plausible mais non démontrée. Échouer purement et
+simplement bloquerait l'analyse des 824 autres articles. La quarantaine isole la ligne pour
+arbitrage humain et laisse le traitement se poursuivre.

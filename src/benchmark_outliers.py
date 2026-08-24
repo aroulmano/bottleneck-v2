@@ -32,6 +32,8 @@ un écart réel d'une fluctuation d'échantillonnage.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
@@ -42,15 +44,17 @@ SEED = 42
 N_ERREURS = 40
 CONTAMINATION = 0.05
 
-RAW = "data/raw"
+# Chemin résolu depuis l'emplacement du module et non depuis le répertoire courant :
+# le module doit donner le même résultat lancé depuis la racine ou depuis notebooks/.
+RAW = Path(__file__).resolve().parent.parent / "data" / "raw"
 
 
 # --------------------------------------------------------------------------- données
 def charger_table_propre() -> pd.DataFrame:
     """Reconstruit la table consolidée en corrigeant les défauts identifiés à l'audit."""
-    erp = pd.read_excel(f"{RAW}/erp.xlsx")
-    web = pd.read_excel(f"{RAW}/web.xlsx")
-    liaison = pd.read_excel(f"{RAW}/liaison.xlsx")
+    erp = pd.read_excel(RAW / "erp.xlsx")
+    web = pd.read_excel(RAW / "web.xlsx")
+    liaison = pd.read_excel(RAW / "liaison.xlsx")
 
     # Les prix négatifs sont des erreurs de signe avérées -> valeur absolue.
     erp.loc[erp["price"] < 0, "price"] = erp["price"].abs()
