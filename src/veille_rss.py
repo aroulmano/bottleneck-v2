@@ -68,31 +68,77 @@ SOURCES: dict[str, list[tuple[str, str]]] = {
 
 # Mots-clés pondérés : le score d'une entrée est la somme des poids des termes trouvés dans son
 # titre et son résumé. Les poids traduisent la priorité du projet, pas la popularité du sujet.
+#
+# Révision du 24/08/2026 après mesure sur le premier digest réel
+# ---------------------------------------------------------------
+# La première version retenait 5 entrées hors sujet sur 10. Cause identifiée : des termes isolés
+# — « drift », « schema », « outlier » — se déclenchaient sur des acceptions sans rapport avec le
+# projet (oubli catastrophique en apprentissage continu, catégorie de schéma en théorie des
+# catégories, valeurs extrêmes d'activation en quantification de modèles de langage).
+#
+# Trois corrections, mesurées dans tests/test_veille.py :
+#   1. les termes ambigus deviennent des expressions ("data drift" et non "drift") ;
+#   2. un vocabulaire de rejet retranche du score les domaines qui saturent arXiv cs.LG ;
+#   3. les flux de recherche exigent un score plus élevé que les flux de releases.
 MOTS_CLES: dict[str, int] = {
-    "anomaly detection": 5,
-    "outlier": 5,
-    "data quality": 5,
-    "data validation": 5,
-    "isolation forest": 4,
-    "schema": 3,
-    "drift": 3,
+    # Cœur du sujet — sans ambiguïté possible
+    "anomaly detection": 6,
+    "outlier detection": 6,
+    "data quality": 6,
+    "data validation": 6,
+    "data cleaning": 5,
+    "isolation forest": 5,
+    "schema validation": 5,
+    "data drift": 5,
+    "entity resolution": 4,
+    "record linkage": 4,
+    "missing data": 4,
+    "imputation": 4,
+    # Contexte tabulaire — ce qui distingue notre problème du reste de l'apprentissage
+    "tabular": 4,
+    "dataframe": 3,
+    "pandera": 5,
+    "great expectations": 4,
+    "pandas": 3,
+    "polars": 3,
+    "duckdb": 3,
+    # Périphérie utile
     "reproducib": 3,
-    "pandera": 4,
-    "great expectations": 3,
-    "dataframe": 2,
-    "pandas": 2,
-    "polars": 2,
-    "duckdb": 2,
+    "feature selection": 3,
     "notebook": 2,
-    "feature selection": 2,
-    "interpretab": 2,
-    "explainab": 2,
-    "energy": 2,
-    "carbon": 2,
-    "green": 1,
+    # Sobriété : critère explicite de la veille (§6), donc pondéré pour franchir seul le seuil
+    # de recherche quand deux de ces termes coexistent — un article sur l'empreinte carbone d'un
+    # traitement de données nous concerne même s'il ne parle pas de qualité.
+    "energy efficiency": 4,
+    "energy consumption": 4,
+    "environmental sustainability": 4,
+    "carbon": 4,
+    "green computing": 4,
 }
 
+# Vocabulaire de rejet : ces domaines dominent arXiv cs.LG et n'ont aucun rapport avec un
+# catalogue de 825 références. Le score négatif neutralise une correspondance fortuite sans
+# exclure une entrée qui traiterait réellement de qualité des données dans ce contexte.
+ANTI_MOTS: dict[str, int] = {
+    "large language model": -8,
+    "llm": -6,
+    "quantization": -6,
+    "reinforcement learning": -6,
+    "graph neural": -5,
+    "federated": -5,
+    "diffusion model": -5,
+    "transformer": -4,
+    "neural network": -4,
+    "deep learning": -3,
+    "computer vision": -5,
+    "speech": -5,
+    "protein": -5,
+}
+
+# Seuils différenciés : un flux de releases publie peu et tout y est potentiellement pertinent ;
+# un flux de recherche publie des centaines d'articles par jour et exige d'être plus sélectif.
 SCORE_MINIMUM = 3
+SCORE_MINIMUM_RECHERCHE = 6
 
 
 @dataclass
@@ -109,13 +155,21 @@ class Entree:
 
 # ------------------------------------------------------------------------------- traitement
 def noter(titre: str, resume: str) -> tuple[int, list[str]]:
-    """Somme des poids des mots-clés présents. Renvoie (score, termes trouvés)."""
+    """Score net d'une entrée : poids des mots-clés, moins ceux du vocabulaire de rejet.
+
+    Renvoie (score, termes déclencheurs). Les termes de rejet ne sont pas listés : ce qui
+    intéresse le lecteur du digest est ce qui a fait retenir l'entrée, pas ce qui a failli
+    l'écarter.
+    """
     texte = f"{titre} {resume}".lower()
     score, trouves = 0, []
     for terme, poids in MOTS_CLES.items():
         if terme in texte:
             score += poids
             trouves.append(terme)
+    for terme, malus in ANTI_MOTS.items():
+        if terme in texte:
+            score += malus
     return score, trouves
 
 
@@ -174,7 +228,13 @@ def collecter(jours: int, vus: set[str]) -> list[Entree]:
 
                 # Les releases des dépendances du projet sont retenues quel que soit leur score :
                 # une nouvelle version de pandas nous concerne même si son titre ne dit rien.
-                if score < SCORE_MINIMUM and axe != "Dépendances du projet":
+                # Les flux de recherche, eux, publient des centaines d'articles par jour.
+                if axe == "Dépendances du projet":
+                    pass
+                elif axe == "Qualité des données et méthodes":
+                    if score < SCORE_MINIMUM_RECHERCHE:
+                        continue
+                elif score < SCORE_MINIMUM:
                     continue
 
                 retenues.append(Entree(axe, nom, titre, lien, d, resume, score, termes))
@@ -189,7 +249,7 @@ def rediger(entrees: list[Entree], jours: int) -> str:
         f"# Digest de veille — {horodatage:%d/%m/%Y}",
         "",
         f"Fenêtre : {jours} jours · Entrées retenues : **{len(entrees)}** · "
-        f"Seuil de pertinence : {SCORE_MINIMUM}",
+        f"Seuil : {SCORE_MINIMUM} (releases) / {SCORE_MINIMUM_RECHERCHE} (recherche)",
         "",
         "> Généré automatiquement par `src/veille_rss.py`. Les entrées déjà signalées lors "
         "d'un digest précédent sont exclues.",
