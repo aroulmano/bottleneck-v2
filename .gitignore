@@ -1,0 +1,17 @@
+# Environnement
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Sorties régénérables
+data/processed/*.xlsx
+!data/processed/.gitkeep
+notebooks/figures/*.png
+logs/*.txt
+
+# Veille : les digests sont versionnés (trace de veille), l'index des vus ne l'est pas
+veille/.entrees_vues.json
+
+# Système
+.DS_Store
