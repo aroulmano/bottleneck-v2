@@ -51,7 +51,7 @@ traçabilité.
 | **Résultat V1** | Liste de défauts plausibles mais non chiffrés. Plusieurs relèvent du style plutôt que de la justesse. Impossible de hiérarchiser. |
 | **Résultat V2** | 3 erreurs de calcul quantifiées avec l'ampleur de l'écart, plus 6 défauts secondaires. Hiérarchisation immédiate par impact métier. |
 | **Décision** | **V2 RETENU.** Un audit IA sans exécution produit des hypothèses ; avec exécution il produit des mesures. L'écart de valeur est considérable. |
-| **Vérification** | Les 3 erreurs principales ont été recalculées indépendamment sous pandas, et confrontées à la consigne d'origine de Nicolas (périmètre temporel des ventes) ainsi qu'à la définition comptable du taux de marge. Voir `notebooks/01_audit_P6.ipynb`. |
+| **Vérification** | Les 3 erreurs principales ont été recalculées indépendamment sous pandas, et confrontées à la consigne d'origine de Nicolas (périmètre temporel des ventes) ainsi qu'à la définition comptable du taux de marge. Recalculs consignés dans la section 1 du README et repris en sections 5 à 7 de `notebooks/02_analyse_amelioree.ipynb`, où le calcul fautif et le calcul juste sont exécutés côte à côte. |
 | **Coût** | 45 min dont 25 min de vérification |
 
 **Enseignement méthodologique.** C'est la variante la plus coûteuse en préparation (rassembler les données,
