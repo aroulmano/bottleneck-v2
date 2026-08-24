@@ -1,42 +1,44 @@
-# Environnement figé — projet BottleNeck v2
+# ══════════════════════════════════════════════════════════════════════════════
+# Environnement de référence — projet BottleNeck v2
 #
-# Versions relevées et vérifiées le 24/08/2026 sur Python 3.11.
-# Reproduire l'environnement :
-#   python -m venv .venv
-#   source .venv/bin/activate        (Windows : .venv\Scripts\activate)
-#   pip install -r requirements.txt
+# Versions exactes sous lesquelles les résultats du notebook ont été produits,
+# le 24/08/2026, sous CPython 3.11.15.
 #
-# Les versions sont épinglées à l'exact (==) et non à l'approché (>=) : le P6 a livré un
-# résultat non reproductible, l'objet de ce fichier est que cela ne se reproduise pas.
+#     python -m venv .venv
+#     .venv\Scripts\activate          (Windows)
+#     source .venv/bin/activate       (macOS / Linux)
+#     pip install -r requirements.txt
+#
+# Si pip ne trouve pas de distribution pour votre version de Python — le cas sur
+# les versions très récentes, pour lesquelles les paquets scientifiques publient
+# leurs wheels avec plusieurs mois de décalage — utilisez requirements-souple.txt.
+# Les chiffres peuvent alors différer à la marge ; le cas échéant, c'est ce
+# fichier-ci qui fait foi.
+# ══════════════════════════════════════════════════════════════════════════════
 
-# --- Traitement des données
+# ---- Traitement des données
 pandas==3.0.2
 numpy==2.4.4
-openpyxl==3.1.5
+openpyxl==3.1.5          # lecture des .xlsx sources
 
-# --- Validation de schéma — retenu en veille, axe 1
-# Écarté : great_expectations (37 dépendances, 395 Mo, non maintenable par le client)
+# ---- Validation de schéma — retenu en veille, axe 1
 pandera==0.32.1
 
-# --- Détection d'anomalies — comparaison des méthodes, axe 2
+# ---- Détection d'anomalies — comparaison des méthodes, axe 2
 scikit-learn==1.8.0
-scipy==1.17.1
+scipy==1.17.1            # tests de normalité, diagramme quantile-quantile
 
-# --- Visualisation
-plotly==6.9.0
+# ---- Visualisation
 matplotlib==3.10.9
-seaborn==0.13.2
+# Ni seaborn ni plotly : le P6 les utilisait, la version 2 n'en a plus besoin.
+# Retirer une dépendance inutilisée est le levier de sobriété le plus direct
+# du projet — cf. veille/veille_technologique.md §6.
 
-# --- Veille automatisée, §7 du document de veille
+# ---- Veille automatisée, axe 3
 feedparser==6.0.14
 
-# --- Qualité de code et tests
+# ---- Tests et génération du notebook
 pytest==9.1.1
-ruff==0.16.4
-
-# --- Volontairement absents
-# polars / duckdb : gain absolu de 0,45 s sur 825 lignes, hors de proportion avec le coût
-#                   de réécriture et de formation. Condition de réexamen consignée au
-#                   registre des risques : volume > 5 M lignes ou pipeline > 30 s.
-# papermill       : redondant avec l'extraction de la logique dans src/.
-# jupytext        : sans objet en travail solo.
+nbformat==5.11.1
+nbconvert==7.17.1
+ipykernel==7.3.0

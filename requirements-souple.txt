@@ -1,0 +1,23 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# Environnement de repli — projet BottleNeck v2
+#
+# À utiliser uniquement si requirements.txt échoue faute de wheels disponibles
+# pour votre version de Python. Les bornes basses garantissent les API employées
+# par le code ; la résolution exacte est laissée à pip.
+#
+# Contrepartie assumée : la reproductibilité au dernier décimal n'est plus
+# garantie. Les versions de référence restent celles de requirements.txt.
+# ══════════════════════════════════════════════════════════════════════════════
+
+pandas>=2.2
+numpy>=1.26
+openpyxl>=3.1
+pandera>=0.20
+scikit-learn>=1.5
+scipy>=1.13
+matplotlib>=3.8
+feedparser>=6.0
+pytest>=8.0
+nbformat>=5.9
+nbconvert>=7.10
+ipykernel>=6.29

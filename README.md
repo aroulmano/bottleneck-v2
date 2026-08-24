@@ -33,10 +33,15 @@ Appliquée, elle aurait bradé la quasi-totalité du stock pour résoudre un pro
 
 ## Reproduire les résultats
 
+**Environnement de référence : CPython 3.11.** Les paquets scientifiques publient leurs wheels
+avec plusieurs mois de décalage sur les versions récentes de Python ; sous 3.13 ou 3.14,
+`pip install -r requirements.txt` peut échouer faute de distribution. Le fichier
+`requirements-souple.txt` sert alors de repli, au prix de la reproductibilité au dernier décimal.
+
 ```bash
 git clone <url-du-depot> && cd bottleneck-v2
 python -m venv .venv && source .venv/bin/activate     # Windows : .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements.txt                        # à défaut : requirements-souple.txt
 
 pytest tests/ -v                                       # 19 tests, ~2 s
 python src/benchmark_outliers.py                       # benchmark, ~3 min
