@@ -79,7 +79,8 @@ bottleneck-v2/
 │   └── digests/                sorties datées du script de veille
 ├── docs/
 │   └── journal_experiences_IA.md  traçabilité des essais IA
-└── requirements.txt
+├── requirements.txt            versions exactes de l'environnement de référence
+└── requirements-souple.txt     repli si les wheels manquent pour votre Python
 ```
 
 **Le notebook ne calcule pas.** Toute la logique vit dans `src/`, où elle est testable. C'est la
