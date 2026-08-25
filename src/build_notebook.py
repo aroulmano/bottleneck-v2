@@ -378,7 +378,7 @@ C'est le cœur méthodologique de cette révision.
 Nicolas demande de « vérifier les erreurs de saisie en détectant des potentielles valeurs
 aberrantes ». La formulation assimile les deux notions ; elles ne se recouvrent pas.
 
-> Un Château Margaux à 225 € est **extrême et juste**.
+> Un Château Margaux à 225 € TTC est **extrême et juste**.
 > Un vin d'entrée de gamme saisi à 52 € au lieu de 5,20 € est **erroné et parfaitement banal** —
 > il se situe au 88ᵉ centile du catalogue, hors d'atteinte de tout seuil de détection.
 
@@ -1046,14 +1046,20 @@ autres articles. La quarantaine isole la ligne pour arbitrage humain et laisse l
 traitement se poursuivre — c'est le compromis retenu sur les pipelines de qualité en production.
 
 **Ce que le schéma ne voit pas, et que la règle métier rattrape.** Trois autres articles ont un
-taux de marque négatif — de −20 % à −44 % — sans franchir la borne des −100 %. Le schéma les
+taux de marque négatif — de −20,8 % à −44,4 % — sans franchir la borne des −100 %. Le schéma les
 laisse passer, parce qu'une vente à perte est *possible* : déstockage, erreur d'achat, produit
 d'appel. C'est la règle métier de la section 4 qui les signale. Les deux niveaux de contrôle ont
 des rôles distincts : le schéma bloque l'impossible, la règle métier alerte sur l'improbable.
+
+Ces trois articles n'ont aucune correspondance sur le site, ce qui les rend d'autant plus faciles
+à manquer : ils sortent de toute analyse de vente. Deux d'entre eux portent malgré tout 3 498 €
+de stock.
 """)
 
 code("""
-vendus[(vendus["taux_marque"] < 0) & (vendus["product_id"] != 4355)][
+# Sur `table` et non sur `vendus` : ces trois articles n'ont aucune correspondance web,
+# ils sortiraient donc du filtre alors que ce sont précisément eux que la règle signale.
+table[(table["taux_marque"] < 0) & (table["product_id"] != 4355)][
     ["product_id", "prix_ht", "purchase_price", "taux_marque", "stock_quantity", "valo_stock"]
 ].round(2)
 """)
