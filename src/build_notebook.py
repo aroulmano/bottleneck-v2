@@ -63,7 +63,7 @@ calcul juste exécutés côte à côte.
 5. Recalculer les indicateurs de gestion et mesurer l'écart avec la version précédente
 6. Valider la table finale contre un schéma qui rend l'absurde impossible à livrer
 
-La logique de calcul est isolée dans `src/pipeline.py` et couverte par 18 tests unitaires.
+La logique de calcul est isolée dans `src/pipeline.py` et couverte par 19 tests unitaires (32 avec ceux du filtrage de veille).
 Ce notebook orchestre et commente ; il ne calcule pas.
 """)
 
