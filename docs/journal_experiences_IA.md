@@ -165,34 +165,6 @@ toute considération de performance. Il n'apparaît dans aucun benchmark publié
 
 ---
 
-## Modèle d'entrée à recopier
-
-### EXP-nn — [Titre]
-
-| | |
-|---|---|
-| **Date** | |
-| **Besoin** | |
-| **Outil** | |
-| **Prompt** | `PR-nn` |
-| **Variantes** | |
-| **Résultat** | |
-| **Décision** | |
-| **Vérification** | |
-| **Coût** | |
-
-**Enseignement méthodologique.**
-
----
-
-## Synthèse des enseignements
-
-*Section à compléter en fin de projet — elle alimente directement la partie « limites et biais » du rapport.*
-
-| Ce que l'IA a bien fait | Ce qu'elle a mal fait | Ce qui a exigé un humain |
-|---|---|---|
-| *(à remplir)* | *(à remplir)* | Apporter le contexte métier (périmètre temporel des ventes) — EXP-01 |
-
 ---
 
 ### EXP-06 — Génération du notebook amélioré
@@ -250,3 +222,154 @@ valeur — l'hypothèse de la virgule décalée (126,50 € au lieu de 12,65 €
 coefficient de 1,36, parfaitement normal) est plausible mais non démontrée. Échouer purement et
 simplement bloquerait l'analyse des 824 autres articles. La quarantaine isole la ligne pour
 arbitrage humain et laisse le traitement se poursuivre.
+
+---
+
+### EXP-08 — Rédaction du cahier des charges
+
+| | |
+|---|---|
+| **Date** | 24/08/2026 |
+| **Besoin** | Produire un cahier des charges fonctionnel répondant aux huit indicateurs de la section Documentation de la grille. |
+| **Outil** | Claude Opus 5 |
+| **Prompt** | `PR-08` |
+| **Variantes** | **V1** : rédiger le document directement dans un traitement de texte. **V2** : le générer par script depuis un fichier de contenu versionné. |
+| **Décision** | **V2 RETENU**, pour les mêmes motifs que le notebook : contenu relisible en diff, structure qui ne dérive pas, document toujours produit par une génération complète. |
+| **Vérification** | Conversion en PDF et lecture page par page. Quatre défauts corrigés, dont deux invisibles autrement. |
+| **Coût** | 2 h dont 40 min de relecture |
+
+**Quatre défauts trouvés à la relecture du rendu, et pas avant :**
+
+1. **La table des matières automatique restait vide.** Un champ Word ne se remplit qu'après
+   actualisation manuelle, ce qu'un destinataire ne fera jamais. Remplacée par un sommaire écrit
+   en dur, dont les numéros de page sont relevés sur le rendu.
+2. **Les tabulations de droite ne s'alignaient pas.** La fonction employée n'est pas rendue par
+   tous les moteurs. Remplacée par une tabulation classique à points de conduite.
+3. **Le document affirmait que le sommaire était « généré automatiquement à partir des titres »**
+   alors qu'il venait d'être écrit en dur. Une phrase fausse sur la méthode, dans un document dont
+   le sujet est la fiabilité. Corrigée.
+4. **Le budget total ne correspondait pas à la somme des lignes.** Recalculé.
+
+**Enseignement.** Le troisième défaut est le plus instructif : l'IA a décrit ce qu'elle avait
+prévu de faire, pas ce qu'elle avait fait. Un texte qui commente son propre processus doit être
+vérifié contre le processus réel, pas relu pour sa cohérence interne — il est parfaitement
+cohérent.
+
+---
+
+### EXP-09 — Vérification finale contre la grille
+
+| | |
+|---|---|
+| **Date** | 24/08/2026 |
+| **Besoin** | S'assurer que chaque indicateur de la grille dispose d'une preuve localisable. |
+| **Outil** | Claude Opus 5 |
+| **Prompt** | `PR-09` |
+| **Variantes** | **V1** : cocher les indicateurs de mémoire. **V2** : produire une matrice où chaque indicateur pointe un fichier et une section, puis relire chaque preuve. |
+| **Décision** | **V2 RETENU.** |
+| **Vérification** | Réexécution complète : 32 tests, notebook de bout en bout, recalcul de tous les chiffres publiés. |
+| **Coût** | 1 h 30 |
+
+**Un défaut trouvé, et c'est le même que celui reproché au livrable précédent.** La documentation
+énonçait « 53 % des articles font 80 % du CA » sans nommer le dénominateur. Selon qu'on compte les
+825 références de l'ERP, les 714 présentes sur le web ou les 689 ayant réellement vendu, le même
+fait s'énonce 52,7 %, 60,9 % ou 63,1 %.
+
+Reformulé partout en **435 articles font 80 % du chiffre d'affaires, soit 63,1 % des 689
+références vendues**. Le nombre absolu ne dépend d'aucune convention.
+
+**Enseignement.** Reprocher un dénominateur implicite puis en produire un est le défaut le plus
+facile à commettre et le plus difficile à voir : on relit le texte pour sa clarté, pas pour ce
+qu'il omet. Seule la confrontation du texte au recalcul l'a révélé.
+
+---
+
+## Synthèse des enseignements
+
+*Section de clôture, rédigée le 24/08/2026 après la vérification finale.*
+
+### Où l'IA a réellement apporté quelque chose
+
+**Reformuler le problème.** L'apport le plus important n'a pas été de produire du code, mais de
+faire apparaître que la question posée — « y a-t-il des valeurs aberrantes dans les prix ? » — et
+la question utile — « y a-t-il des prix erronés ? » — ne sont pas la même. Toute la partie sur la
+détection découle de cette distinction, et elle a émergé d'un échange, pas d'un calcul.
+
+**Concevoir un protocole d'évaluation là où aucune donnée étiquetée n'existe.** L'injection
+contrôlée d'erreurs a permis de mesurer six méthodes sur un terrain commun. Sans cela, la
+comparaison serait restée une préférence argumentée.
+
+**Quantifier vite.** Un audit avec exécution de code produit des mesures là où un audit sans
+exécution produit des hypothèses. Trois erreurs chiffrées en euros en quarante-cinq minutes.
+
+**Produire du volume structuré.** Vingt-quatre pages de cahier des charges, un document de veille,
+une matrice de preuves. C'est le gain le moins intéressant intellectuellement et le plus important
+en pratique.
+
+### Où elle s'est trompée
+
+Six défauts, et leur classement par difficulté de détection est plus instructif que leur liste.
+
+| Défaut | Détectable par | Difficulté |
+|---|---|---|
+| Erreurs de syntaxe | Exécution | Immédiate |
+| Chemins relatifs cassés | Exécution ailleurs | Facile |
+| Règle métier bornée à 1,0 au lieu de 1,05 | Décomposition du résultat par type d'erreur | Moyenne — la métrique globale la masquait |
+| Versions épinglées inexactes | Comparaison avec l'environnement réel | Moyenne — personne ne vérifie un fichier de dépendances |
+| Courbe de Pareto à l'exposant inverse | Regarder l'image | **Difficile** — aucun test ne l'attrape |
+| Dénominateur implicite sur la concentration | Recalcul confronté au texte | **Difficile** — le texte est cohérent avec lui-même |
+
+Les deux derniers partagent une propriété : **ils produisent un résultat qui a l'air juste**. Une
+figure soignée, une phrase claire. C'est exactement le mode de défaillance qui avait produit les
+trois erreurs du livrable initial.
+
+### Ce que seul l'humain a apporté
+
+**Le contexte métier.** L'erreur du facteur 12 sur les durées d'écoulement n'a pas été détectée
+par l'IA. Elle l'a signalée comme « hypothèse non justifiée » ; c'est la confrontation à la phrase
+du commanditaire — « pour les ventes c'est du 1 octobre au 31 octobre » — qui a permis de trancher.
+
+**Le regard sur les images.** Aucun test ne peut voir qu'une courbe est tracée à l'envers.
+
+**L'arbitrage sur ce qu'on n'invente pas.** Le choix de mettre la référence 4355 en quarantaine
+plutôt que de la corriger repose sur un jugement : l'hypothèse de la virgule décalée est
+plausible, pas démontrée. Une IA à qui l'on demande de corriger corrige.
+
+**La décision de périmètre.** Écarter la prévision de la demande faute d'historique suffisant est
+un arbitrage entre le risque de perdre des points pour non-couverture et celui d'en perdre
+davantage pour un modèle indéfendable.
+
+### La règle qui résume tout
+
+Trois défauts sur six ont été trouvés parce qu'un chiffre a été **mesuré au lieu d'être cité**, ou
+**recalculé au lieu d'être relu**.
+
+C'est la seule règle que je retiens de ce projet : *une sortie d'IA se vérifie en la confrontant
+au réel, jamais en la relisant.* Une relecture teste la cohérence interne, et la cohérence interne
+est précisément ce qu'un modèle de langage produit le mieux.
+
+### Ce que je ferais différemment
+
+**Mesurer plus tôt.** La révision du filtre de veille est venue après la première exécution
+réelle. Elle aurait pu venir avant, en construisant le jeu d'évaluation dès la conception.
+
+**Relire les figures dès la première.** Les treize ont été produites puis relues en bloc, ce qui a
+imposé une reprise complète. Une relecture après la première figure aurait attrapé les collisions
+de mise en page immédiatement.
+
+**Séparer génération et vérification.** Les deux défauts difficiles ont survécu parce que la même
+session a produit et relu. Faire relire par une session neuve, sans le contexte de production,
+aurait probablement attrapé le dénominateur implicite.
+
+### Coût réel
+
+| Poste | Temps | Part |
+|---|---|---|
+| Production assistée par IA | 6 h 30 | 52 % |
+| Vérification et correction | 4 h 15 | 34 % |
+| Installation et environnement | 1 h 45 | 14 % |
+
+**Un tiers du temps est passé à vérifier.** C'est le ratio à annoncer honnêtement : l'IA ne
+supprime pas le travail de contrôle, elle le déplace. Ce qu'elle fait gagner sur la production,
+elle le reprend en partie sur la vérification — et une organisation qui néglige ce second poste
+livre plus vite des résultats faux.

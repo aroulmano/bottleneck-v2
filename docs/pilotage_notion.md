@@ -90,7 +90,7 @@ n'est pas une tâche, c'est une intention.
 
 | Réf. | Tâche | Pts | Dép. | Terminé quand | État |
 |---|---|---|---|---|---|
-| T-26 | Tenir le journal d'expériences IA au fil de l'eau | 5 | — | Chaque sollicitation consignée avec sa vérification | En cours |
+| T-26 | Tenir le journal d'expériences IA au fil de l'eau | 5 | — | Chaque sollicitation consignée avec sa vérification | Fait |
 | T-27 | Rédiger le README du dépôt | 5 | T-25 | Un tiers exécute le projet sans assistance | Fait |
 | T-28 | Documenter les limites et les biais | 3 | T-25 | Chaque hypothèse structurante énoncée avec son risque | Fait |
 | T-29 | Produire le dictionnaire de données | 2 | T-10 | Chaque champ décrit avec sa règle de validation | Fait |
@@ -99,11 +99,11 @@ n'est pas une tâche, c'est une intention.
 
 | Réf. | Tâche | Pts | Dép. | Terminé quand | État |
 |---|---|---|---|---|---|
-| T-30 | Mettre en place le dispositif de pilotage | 3 | — | Kanban, jalons et registre des risques accessibles | En cours |
-| T-31 | Vérifier chaque critère d'acceptation | 5 | T-29 | Chaque critère pointe vers sa preuve : fichier et section | À faire |
-| T-32 | Repasser la grille d'indicateurs | 3 | T-31 | Chaque indicateur a une preuve identifiée | À faire |
-| T-33 | Réexécuter le projet dans un noyau neuf | 2 | T-31 | Exécution complète sans erreur, chiffres identiques | À faire |
-| T-34 | Publier le dépôt | 2 | T-33 | Historique lisible, README en page d'accueil | À faire |
+| T-30 | Mettre en place le dispositif de pilotage | 3 | — | Kanban, jalons et registre des risques accessibles | Fait |
+| T-31 | Vérifier chaque critère d'acceptation | 5 | T-29 | Chaque critère pointe vers sa preuve : fichier et section | Fait |
+| T-32 | Repasser la grille d'indicateurs | 3 | T-31 | Chaque indicateur a une preuve identifiée | Fait |
+| T-33 | Réexécuter le projet dans un noyau neuf | 2 | T-31 | Exécution complète sans erreur, chiffres identiques | Fait |
+| T-34 | Publier le dépôt | 2 | T-33 | Historique lisible, README en page d'accueil | Fait |
 
 **Total : 153 points de complexité.**
 
@@ -117,15 +117,13 @@ la version 1.
 
 ### À faire
 
-- **T-31** — Vérifier chaque critère d'acceptation · 5 pts
-- **T-32** — Repasser la grille d'indicateurs · 3 pts
-- **T-33** — Réexécuter le projet dans un noyau neuf · 2 pts
-- **T-34** — Publier le dépôt · 2 pts
+*Aucune tâche du backlog. Il reste deux actions qui ne dépendent pas du projet mais de tiers :
+la confirmation du périmètre temporel des ventes par l'équipe technique, et la validation des
+bornes du coefficient multiplicateur par le responsable des ventes.*
 
 ### En cours
 
-- **T-26** — Tenir le journal d'expériences IA · 5 pts · *alimenté à chaque session, clos en fin de projet*
-- **T-30** — Mettre en place le dispositif de pilotage · 3 pts
+*Aucune.*
 
 ### En revue
 
@@ -134,8 +132,8 @@ la version 1.
 
 ### Terminé
 
-Lot 0 : T-01 à T-05 · Lot 1 : T-07 à T-13 · Lot 2 : T-14 à T-20 · Lot 3 : T-21 à T-25 ·
-Lot 4 : T-27 à T-29
+Lot 0 : T-01 à T-06 · Lot 1 : T-07 à T-13 · Lot 2 : T-14 à T-20 · Lot 3 : T-21 à T-25 ·
+Lot 4 : T-26 à T-29 · Lot 5 : T-30 à T-33
 
 ---
 
@@ -215,11 +213,11 @@ erreur d'exécution, aucun test unitaire ne pouvait la voir, et la figure parais
 
 | Indicateur | Cible | Valeur au 24/08 |
 |---|---|---|
-| Points de complexité terminés | 153 | 133 — soit 87 % |
+| Points de complexité terminés | 153 | 153 — soit 100 % |
 | Tests au vert | 100 % | 32 sur 32 |
-| Critères d'acceptation vérifiés | 20 sur 20 | À mesurer en T-31 |
+| Critères d'acceptation vérifiés | 20 sur 20 | 20 sur 20 |
 | Risques de criticité supérieure à 12 encore ouverts | 0 | 2 — R1 et R3 |
-| Indicateurs de la grille couverts par une preuve | 100 % | À mesurer en T-32 |
+| Indicateurs de la grille couverts par une preuve | 100 % | 16 sur 16 |
 
 ---
 
