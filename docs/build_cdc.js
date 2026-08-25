@@ -768,7 +768,7 @@ A(
   h3("Module A — Lire un indicateur de gestion (comité de direction, responsable des ventes)"),
   puce("Trois notions distinguées sans jargon : chiffre d'affaires hors taxes et toutes taxes comprises, taux de marge et taux de marque, durée d'écoulement du stock."),
   puce("Pourquoi la TVA n'est pas du chiffre d'affaires : démonstration sur un article du catalogue."),
-  puce("Pourquoi 53 % des références pour 80 % du chiffre d'affaires signifie une dispersion et non une concentration — et ce que cela change pour la stratégie de gamme."),
+  puce("Pourquoi 435 références sur 689 pour 80 % du chiffre d'affaires signifie une dispersion et non une concentration — et ce que cela change pour la stratégie de gamme."),
   puce("Les trois questions à poser devant tout chiffre présenté : sur quelle période, sur quel périmètre, hors taxes ou toutes taxes comprises."),
 
   espace(140),
@@ -880,7 +880,7 @@ A(tableau(
     ["Prix hors taxes", "Prix de vente diminué de la TVA. C'est le niveau auquel se calcule un chiffre d'affaires.", "120 € toutes taxes comprises à 20 % de TVA valent 100 € hors taxes."],
     ["Durée d'écoulement", "Nombre de mois nécessaires pour vendre le stock au rythme de vente observé. Indéterminée si l'article n'enregistre aucune vente.", "100 unités en stock, 25 vendues sur le mois : quatre mois."],
     ["Coefficient multiplicateur", "Rapport entre le prix de vente hors taxes et le prix d'achat.", "Acheté 20 €, vendu 50 € HT : coefficient de 2,5."],
-    ["Loi de Pareto", "Observation selon laquelle une petite part des références produit l'essentiel du chiffre d'affaires. Elle ne s'applique pas au catalogue de BottleNeck.", "Ici, 53 % des références font 80 % du chiffre d'affaires."],
+    ["Loi de Pareto", "Observation selon laquelle une petite part des références produit l'essentiel du chiffre d'affaires. Elle ne s'applique pas au catalogue de BottleNeck.", "Ici, 435 références sur 689 vendues font 80 % du chiffre d'affaires."],
     ["Valeur extrême", "Valeur très éloignée de la moyenne. Elle peut être parfaitement juste.", "Un grand cru à 225 €."],
     ["Valeur erronée", "Valeur contredisant une règle du métier, même si elle paraît banale.", "Un vin d'entrée de gamme à 52 € au lieu de 5,20 €."],
     ["Quarantaine", "Mise à l'écart d'une référence dont une valeur est impossible, en attente d'un arbitrage humain, sans interrompre le traitement des autres.", "La référence 4355."],

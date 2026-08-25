@@ -48,7 +48,7 @@ d'entre elles inversent la conclusion métier.
 | Indicateur | Version livrée au CODIR | Version corrigée | Conséquence |
 |---|---|---|---|
 | Articles à plus de 12 mois de stock | 639 — soit 77 % du catalogue | **24** | La recommandation de brader 639 références portait sur un catalogue dont la rotation médiane est de 2,4 mois |
-| Concentration du chiffre d'affaires | « forte concentration sur un petit nombre de produits » | **Dispersion** — 53 % des articles font 80 % du CA | Le problème est une longue traîne, pas une dépendance à quelques best-sellers |
+| Concentration du chiffre d'affaires | « forte concentration sur un petit nombre de produits » | **Dispersion** — 435 articles font 80 % du CA, soit 63 % des références vendues | Le problème est une longue traîne, pas une dépendance à quelques best-sellers |
 | Taux de marge moyen | 47,3 % | **36,8 %** de taux de marque HT | Le champagne n'est pas peu rentable, il est vendu quasiment à prix coûtant |
 
 Chaque correction est démontrée dans la section correspondante, avec le calcul fautif et le
@@ -616,9 +616,13 @@ n'était donc pas le CA du catalogue mais celui des vingt premiers articles, si 
 atteignait mécaniquement 100 % au vingtième rang, quel que soit leur poids réel.
 
 Le chiffre finalement présenté au CODIR — 53 % des articles pour 80 % du CA — est proche du
-résultat correct. **C'est la lecture qui est fausse** : la présentation en conclut « une forte
-concentration des ventes sur un petit nombre de produits », alors que 53 % des articles pour
-80 % du CA décrit exactement le contraire.
+résultat correct, à condition de nommer son dénominateur : **435 articles font 80 % du chiffre
+d'affaires, soit 63,1 % des 689 références ayant enregistré au moins une vente, ou 52,7 % du
+catalogue ERP de 825 références.** Les deux lectures disent la même chose.
+
+**C'est l'interprétation qui est fausse.** La présentation conclut à « une forte concentration
+des ventes sur un petit nombre de produits », alors qu'une majorité des références est nécessaire
+pour atteindre 80 % du chiffre d'affaires — ce qui décrit exactement le contraire.
 """)
 
 code("""

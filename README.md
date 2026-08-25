@@ -19,9 +19,9 @@ entre les deux. Une première analyse a été livrée à son comité de directio
 |---|---|---|---|
 | Articles à plus de 12 mois de stock | 639 — 77 % du catalogue | **24** | Ventes mensuelles traitées comme annuelles |
 | Stock dormant | 259 867 € | **95 012 €** | Même cause |
-| Concentration du CA | « forte concentration » | **Dispersion** — top 20 = 11 % du CA | Lecture inversée d'un chiffre correct |
+| Concentration du CA | « forte concentration » | **Dispersion** — 435 des 689 références vendues font 80 % du CA | Interprétation inversée d'un chiffre correct |
 | Chiffre d'affaires | 143 680 € | **119 733 € HT** | Le montant incluait la TVA |
-| Taux de marge moyen | 47,3 % | **36,8 %** de marque HT | Assiette TTC, et confusion marge / marque |
+| Taux de marge moyen | 47,3 % | **36,8 %** de taux de marque HT | Assiette TTC, et confusion marge / marque |
 | Marque du champagne | 20,7 % | **4,8 %** | Même cause |
 | Détection d'erreurs de prix | Z-score, « aucune erreur » | Rappel de **0,15** | La méthode répondait à une autre question |
 
